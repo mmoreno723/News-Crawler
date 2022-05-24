@@ -12,7 +12,7 @@ var searchButton = function(event) {
     }
 }
 
-function getSearchResult(keyword) {
+function getSearchResults(keyword) {
     
     // start here
     var requestUrl = 'http://api.mediastack.com/v1/news?access_key=c230246a63bce12a7b4bde1321f236d3&languages=en&categories=sports';
@@ -29,6 +29,6 @@ function getCurrentApi() {
 }
 
 
-getCurrentApi();
+getSearchResults();
 
 addEventListener('submit', searchButton);
