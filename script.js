@@ -20,8 +20,6 @@ var searchOnClick = function(event) {
     console.log(newSearchObj);
 
     getSearchResults();
-
-
 }
 
 function getMediaApi(requestUrl) {
@@ -64,5 +62,3 @@ function renderSearchDatatoPage(data) {
 
 
 searchButton.addEventListener('click', searchOnClick);
-
-var requestUrl = 'http://api.mediastack.com/v1/news?access_key=c230246a63bce12a7b4bde1321f236d3&languages=en&categories=sports';
