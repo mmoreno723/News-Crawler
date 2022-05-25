@@ -3,15 +3,18 @@ var newSearchObj = {
     categories: "",
     countries: "",
     languages:"",
-
+    hasSearched: false,
+    numResults: 9
 }
+
+var mediaData = "";
 
 var searchButton = document.querySelector("#searchBtn");
 var container = document.querySelector("#cardContainer");
-
+var numResultsSelector = document.querySelector("#num-results-selector");
 
 var searchOnClick = function(event) {
-    console.log("Search Button event listener");
+    newSearchObj.hasSearched = true;
     event.preventDefault();
     newSearchObj.keywords = document.querySelector("#keyword").value;
 
@@ -69,6 +72,8 @@ var searchOnClick = function(event) {
         }
     }
     
+    // make the number of results selector appear after the search button has been clicked
+    document.querySelector("#num-results").classList.remove("is-hidden");
     getSearchResults();
 }
 
@@ -78,13 +83,20 @@ function getMediaApi(requestUrl) {
             return response.json();
         })
         .then(function (data) {
-            renderSearchDatatoPage(data);
+            // EH notes: I changed the query data to a global variable
+            mediaData = data;
+            renderSearchDatatoPage();
         });
 }
 
-function getSearchResults(keyword) {
-    var requestUrl = 'http://api.mediastack.com/v1/news?access_key=c230246a63bce12a7b4bde1321f236d3';
+function getSearchResults(limit) {
+    console.log("limit: " + limit);
 
+    var requestUrl = 'http://api.mediastack.com/v1/news?access_key=c230246a63bce12a7b4bde1321f236d3';
+    // check if a limit has been specified. If not, the default is 25 according to media stack
+    if (limit !== undefined) {
+        requestUrl = requestUrl + "&limit=" + limit;
+    }
     if (newSearchObj.keywords != null) {
         requestUrl = requestUrl + "&keywords=" + newSearchObj.keywords;
     }
@@ -102,11 +114,12 @@ function getSearchResults(keyword) {
     getMediaApi(requestUrl);
 }
 
-function renderSearchDatatoPage(data) {
+function renderSearchDatatoPage() {
     container.textContent="";
-    articles = data.data;
-
-    for(let i = 0; i < articles.length; i++)
+    articles = mediaData.data;
+    
+    // EH Notes: changed so that we only render the number of articles that the user wants. The default is 9.
+    for(let i = 0; i < newSearchObj.numResults; i++)
     {
         var card = document.createElement("div");
         card.setAttribute("class", "card column is-multiline is-one-third");
@@ -153,4 +166,16 @@ function renderSearchDatatoPage(data) {
     }
 }
 
+var changeNumResults = function(event) {
+    newSearchObj.numResults = numResultsSelector.value;
+    if (newSearchObj.numResults <= 25) {
+        renderSearchDatatoPage()
+    // if the user wants more results than the default limit of 25, run the query again with a higher limit
+    } else {
+        getSearchResults(newSearchObj.numResults)
+    }
+    console.log("newSearchObj.numResults: " + newSearchObj.numResults);
+} 
+
 searchButton.addEventListener('click', searchOnClick);
+numResultsSelector.addEventListener('change', changeNumResults);
