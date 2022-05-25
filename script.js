@@ -9,9 +9,6 @@ var newSearchObj = {
 var searchButton = document.querySelector("#searchBtn");
 var container = document.querySelector("#cardContainer");
 
-// $(function() {
-//     $('#categories').selectize();
-//   });
 
 
 var searchOnClick = function(event) {
@@ -45,7 +42,7 @@ var searchOnClick = function(event) {
 
     console.log(newSearchObj);
 
-   // getSearchResults();
+   getSearchResults();
 }
 
 function getMediaApi(requestUrl) {
