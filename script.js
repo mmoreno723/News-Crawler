@@ -9,18 +9,43 @@ var newSearchObj = {
 var searchButton = document.querySelector("#searchBtn");
 var container = document.querySelector("#cardContainer");
 
+// $(function() {
+//     $('#categories').selectize();
+//   });
+
 
 var searchOnClick = function(event) {
     console.log("Search Button event listener");
     event.preventDefault();
     newSearchObj.keywords = document.querySelector("#keyword").value;
-    newSearchObj.categories = document.querySelector("#categories").value;
+
+    var categoriesOptions = document.querySelector("#categories").options;
+    var categoriesSelected = [];
+    var index = 0;
+    for (var i = 0; i < categoriesOptions.length; i++) {
+        // add the selected options for categories
+        // exclude the placeholder disabled option
+        if(categoriesOptions[i].selected && categoriesOptions[i].value != "") {
+            categoriesSelected[index] = categoriesOptions[i].value;
+            index++;
+        } 
+    }
+    for (var j = 0; j < categoriesSelected.length; j++) {
+        newSearchObj.categories += categoriesSelected[j];
+        if (j < categoriesSelected.length-1) {
+            // add a comma between the options
+            // make sure to avoid putting an option at the end
+            newSearchObj.categories += ",";
+        }
+    }
+
+
     newSearchObj.countries = document.querySelector("#countries").value;
     newSearchObj.languages = document.querySelector("#languages").value;
 
     console.log(newSearchObj);
 
-    getSearchResults();
+   // getSearchResults();
 }
 
 function getMediaApi(requestUrl) {
