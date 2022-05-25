@@ -29,20 +29,45 @@ var searchOnClick = function(event) {
     }
     for (var j = 0; j < categoriesSelected.length; j++) {
         newSearchObj.categories += categoriesSelected[j];
+        // add a comma between the options
+        // make sure to avoid putting an option at the end
         if (j < categoriesSelected.length-1) {
-            // add a comma between the options
-            // make sure to avoid putting an option at the end
             newSearchObj.categories += ",";
         }
     }
-    var countriesOptions = document.querySelector("#countries").value;
+    var countriesOptions = document.querySelector("#countries").options;
     var countriesSelected = [];
-    var index = 0;
+    index = 0;
+
+    for (i=0; i < countriesOptions.length; i++) {
+        if(countriesOptions[i].selected && countriesOptions[i].value != "") {
+            countriesSelected[index] = countriesOptions[i].value;
+            index++;
+        }
+    }
+    for (j=0; j < countriesSelected.length; j++) {
+        newSearchObj.countries += countriesSelected[j];
+        if (j < countriesSelected.length-1) {
+            newSearchObj.countries += ",";
+        }
+    }
     
+    var languagesOptions = document.querySelector("#languages").options;
+    var languagesSelected = [];
+    index = 0;
 
-    newSearchObj.languages = document.querySelector("#languages").value;
-
-    console.log(newSearchObj);
+    for (i=0; i < languagesOptions.length; i++) {
+        if(languagesOptions[i].selected && countriesOptions[i].value != "") {
+            languagesSelected[index] = languagesOptions[i].value;
+            index++;
+        }
+    }
+    for (j=0; j < languagesSelected.length; j++) {
+        newSearchObj.languages += languagesSelected[j];
+        if (j < languagesSelected.length-1) {
+            newSearchObj.languages += ",";
+        }
+    }
     
     getSearchResults();
 }
@@ -58,8 +83,6 @@ function getMediaApi(requestUrl) {
 }
 
 function getSearchResults(keyword) {
-    
-    // start here
     var requestUrl = 'http://api.mediastack.com/v1/news?access_key=c230246a63bce12a7b4bde1321f236d3';
 
     if (newSearchObj.keywords != null) {
@@ -77,15 +100,10 @@ function getSearchResults(keyword) {
 
     console.log(requestUrl);
     getMediaApi(requestUrl);
-
 }
 
 function renderSearchDatatoPage(data) {
-    console.log(data);
-    console.log("renderSearchDatatoPage()");
-    
     container.textContent="";
-
     articles = data.data;
 
     for(let i = 0; i < articles.length; i++)
@@ -133,7 +151,6 @@ function renderSearchDatatoPage(data) {
         card.appendChild(cardContent);
         container.appendChild(card);
     }
-    
 }
 
 searchButton.addEventListener('click', searchOnClick);
