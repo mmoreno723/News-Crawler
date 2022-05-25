@@ -59,6 +59,8 @@ function getSearchResults(keyword) {
 function renderSearchDatatoPage(data) {
     console.log(data);
     console.log("renderSearchDatatoPage()");
+    
+    container.textContent="";
 
     articles = data.data;
 
@@ -73,8 +75,11 @@ function renderSearchDatatoPage(data) {
             cardImg.setAttribute("class", "card-image");
             var imgFigure = document.createElement("figure");
             imgFigure.setAttribute("class", "image is-4by3");
+
             var img = document.createElement("img");
             img.setAttribute("src", articles[i].image);
+            img.setAttribute("onerror", "this.onerror=null; this.src='https://bulma.io/images/placeholders/1280x960.png'");
+
             imgFigure.appendChild(img);
             cardImg.appendChild(imgFigure);
             card.appendChild(cardImg);
@@ -97,8 +102,9 @@ function renderSearchDatatoPage(data) {
         link.textContent = "See full article";
         cardContent.appendChild(link);
 
-        var date = document.createElement("time")
-
+        var date = document.createElement("time");
+        date.setAttribute("datetime", articles[i].published_at);
+        cardContent.appendChild(date);
 
         card.appendChild(cardContent);
         container.appendChild(card);
