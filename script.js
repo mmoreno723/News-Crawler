@@ -60,5 +60,4 @@ function renderSearchDatatoPage(data) {
     console.log("renderSearchDatatoPage()");
 }
 
-
 searchButton.addEventListener('click', searchOnClick);
