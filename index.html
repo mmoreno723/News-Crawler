@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="style.css">
     <title>News Crawler</title>
 </head>
 <body>
@@ -20,113 +21,111 @@
             </div>
           </section>
     </header>
-    <section>
-        <nav class="level">
-            <div class="level-item has-text-centered">
-              <div>
-                <input id="keyword" class="input" type="text" placeholder="Search by Keyword">
-              </div>
+    <nav class="columns is-mobile is-multiline is-centered">
+        <div class="column is-narrow">
+            <div>
+            <input id="keyword" class="input" type="text" placeholder="Search by Keyword">
             </div>
-            <div class="level-item has-text-centered">
-                <div class="select">
-                    <select id="categories">
-                      <option selected disabled value="">Categories</option>
-                      <option value="general">General</option>
-                      <option value="business">Business</option>
-                      <option value="entertainment">Entertainment</option>
-                      <option value="health">Health</option>
-                      <option value="sports">Sports</option>
-                      <option value="technology">Technology</option>
-                    </select>
-                </div>
-            </div>
-            <div class="level-item has-text-centered">
-              <div class="select">
-                <select id="countries">
-                  <option selected disabled value="">Countries</option>
-                  <option value="ar">Argentina</option>
-                  <option value="au">Australia</option>
-                  <option value="at">Austria</option>
-                  <option value="be">Belgium</option>
-                  <option value="br">Brazil</option>
-                  <option value="bg">Bulgaria</option>
-                  <option value="ca">Canada</option>
-                  <option value="cn">China</option>
-                  <option value="co">Columbia</option>
-                  <option value="cz">Czech Republic</option>
-                  <option value="eg">Egypt</option>
-                  <option value="fr">France</option>
-                  <option value="de">Germany</option>
-                  <option value="gr">Greece</option>
-                  <option value="hk">Hong Kong</option>
-                  <option value="hu">Hungary</option>
-                  <option value="in">India</option>
-                  <option value="id">Indonesia</option>
-                  <option value="ie">Ireland</option>
-                  <option value="il">Israel</option>
-                  <option value="it">Italy</option>
-                  <option value="jp">Japan</option>
-                  <option value="lv">Latvia</option>
-                  <option value="lt">Lithania</option>
-                  <option value="my">Malaysia</option>
-                  <option value="mx">Mexico</option>
-                  <option value="ma">Morocoo</option>
-                  <option value="nl">Netherlands</option>
-                  <option value="nz">New Zealand</option>
-                  <option value="ng">Nigeria</option>
-                  <option value="no">Norway</option>
-                  <option value="ph">Philippines</option>
-                  <option value="pl">Poland</option>
-                  <option value="pt">Portugal</option>
-                  <option value="ro">Romania</option>
-                  <option value="sa">Saudi Arabia</option>
-                  <option value="rs">Serbia</option>
-                  <option value="sg">Singapore</option>
-                  <option value="sk">Slovakia</option>
-                  <option value="si">Slovenia</option>
-                  <option value="za">South Africa</option>
-                  <option value="kr">South Korea</option>
-                  <option value="se">Sweden</option>
-                  <option value="ch">Switzerland</option>
-                  <option value="tw">Taiwan</option>
-                  <option value="th">Thailand</option>
-                  <option value="tr">Turkey</option>
-                  <option value="ae">UAE</option>
-                  <option value="ua">Ukraine</option>
-                  <option value="gb">United Kingdom</option>
-                  <option value="us">United States</option>
-                  <option value="ve">Venuzuela</option>
+        </div>
+        <div class="column is-narrow">
+            <div id="categories" class="select">
+                <select>
+                    <option selected disabled value="">Categories</option>
+                    <option value="general">General</option>
+                    <option value="business">Business</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="health">Health</option>
+                    <option value="sports">Sports</option>
+                    <option value="technology">Technology</option>
                 </select>
-              </div>
             </div>
-            <div class="level-item has-text-centered">
-                <div class="select">
-                    <select id="languages">
-                      <option selected disabled value="">Language</option>
-                      <option value="ar">Arabic</option>
-                      <option value="de">German</option>
-                      <option value="en">English</option>
-                      <option value="es">Spanish</option>
-                      <option value="fr">French</option>
-                      <option value="he">Hebrew</option>
-                      <option value="it">Italian</option>
-                      <option value="nl">Dutch</option>
-                      <option value="no">Norwegian</option>
-                      <option value="pt">Portuguese</option>
-                      <option value="ru">Russian</option>
-                      <option value="se">Swedish</option>
-                      <option value="zh">Chinese</option>
-                    </select>
-                </div>
+        </div>
+        <div class="column is-narrow">
+            <div id="countries" class="select">
+            <select>
+                <option selected disabled value="">Countries</option>
+                <option value="ar">Argentina</option>
+                <option value="au">Australia</option>
+                <option value="at">Austria</option>
+                <option value="be">Belgium</option>
+                <option value="br">Brazil</option>
+                <option value="bg">Bulgaria</option>
+                <option value="ca">Canada</option>
+                <option value="cn">China</option>
+                <option value="co">Columbia</option>
+                <option value="cz">Czech Republic</option>
+                <option value="eg">Egypt</option>
+                <option value="fr">France</option>
+                <option value="de">Germany</option>
+                <option value="gr">Greece</option>
+                <option value="hk">Hong Kong</option>
+                <option value="hu">Hungary</option>
+                <option value="in">India</option>
+                <option value="id">Indonesia</option>
+                <option value="ie">Ireland</option>
+                <option value="il">Israel</option>
+                <option value="it">Italy</option>
+                <option value="jp">Japan</option>
+                <option value="lv">Latvia</option>
+                <option value="lt">Lithania</option>
+                <option value="my">Malaysia</option>
+                <option value="mx">Mexico</option>
+                <option value="ma">Morocoo</option>
+                <option value="nl">Netherlands</option>
+                <option value="nz">New Zealand</option>
+                <option value="ng">Nigeria</option>
+                <option value="no">Norway</option>
+                <option value="ph">Philippines</option>
+                <option value="pl">Poland</option>
+                <option value="pt">Portugal</option>
+                <option value="ro">Romania</option>
+                <option value="sa">Saudi Arabia</option>
+                <option value="rs">Serbia</option>
+                <option value="sg">Singapore</option>
+                <option value="sk">Slovakia</option>
+                <option value="si">Slovenia</option>
+                <option value="za">South Africa</option>
+                <option value="kr">South Korea</option>
+                <option value="se">Sweden</option>
+                <option value="ch">Switzerland</option>
+                <option value="tw">Taiwan</option>
+                <option value="th">Thailand</option>
+                <option value="tr">Turkey</option>
+                <option value="ae">UAE</option>
+                <option value="ua">Ukraine</option>
+                <option value="gb">United Kingdom</option>
+                <option value="us">United States</option>
+                <option value="ve">Venuzuela</option>
+            </select>
             </div>
+        </div>
+        <div class="column is-narrow">
+            <div id="language" class="select">
+                <select>
+                    <option selected disabled value="">Language</option>
+                    <option value="ar">Arabic</option>
+                    <option value="de">German</option>
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="he">Hebrew</option>
+                    <option value="it">Italian</option>
+                    <option value="nl">Dutch</option>
+                    <option value="no">Norwegian</option>
+                    <option value="pt">Portuguese</option>
+                    <option value="ru">Russian</option>
+                    <option value="se">Swedish</option>
+                    <option value="zh">Chinese</option>
+                </select>
+            </div>
+        </div>
 
-            <div class="level-item has-text-centered">
-              <div>
-                <button id="searchBtn" type="submit" class="button is-info">Search</button>
-              </div>
+        <div class="column is-narrow">
+            <div>
+            <button id="searchBtn" type="submit" class="button is-info">Search</button>
             </div>
-        </nav>
-    </section>
+        </div>
+    </nav>
     <div class="select">
         <select>
           <option selected disabled value="'">Number of Results</option>
@@ -139,6 +138,25 @@
         </select>
       </div>
     <main>
+        <div id="newsCard" class="card">
+            <div class="card-image">
+                <figure class="image is-4by3">
+                    <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media-content">
+                <p class="title is-4">Title</p>
+                </div>
+            </div>
+        
+            <div class="content">
+                <p>Description</p>
+                <br>
+                <a>Link</a>
+                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+            </div>
+        </div>
     </main>
     <footer>
         this will be the footer
