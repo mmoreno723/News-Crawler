@@ -7,6 +7,7 @@ var newSearchObj = {
 }
 
 var searchButton = document.querySelector("#searchBtn");
+var container = document.querySelector("#cardContainer");
 
 
 var searchOnClick = function(event) {
@@ -58,6 +59,51 @@ function getSearchResults(keyword) {
 function renderSearchDatatoPage(data) {
     console.log(data);
     console.log("renderSearchDatatoPage()");
+
+    articles = data.data;
+
+    for(let i = 0; i < articles.length; i++)
+    {
+        var card = document.createElement("div");
+        card.setAttribute("class", "card column is-multiline is-one-third");
+        
+        if(articles[i].image != null)
+        {
+            var cardImg = document.createElement("div");
+            cardImg.setAttribute("class", "card-image");
+            var imgFigure = document.createElement("figure");
+            imgFigure.setAttribute("class", "image is-4by3");
+            var img = document.createElement("img");
+            img.setAttribute("src", articles[i].image);
+            imgFigure.appendChild(img);
+            cardImg.appendChild(imgFigure);
+            card.appendChild(cardImg);
+        }
+        
+        var cardContent = document.createElement("div");
+        cardContent.setAttribute("class", "card-content");
+        
+        var title = document.createElement("p");
+        title.setAttribute("class", "title is-4");
+        title.textContent = articles[i].title;
+        cardContent.appendChild(title);
+        
+        var description = document.createElement("p");
+        description.textContent = articles[i].description;
+        cardContent.appendChild(description);
+
+        var link = document.createElement("a");
+        link.setAttribute("href", articles[i].url);
+        link.textContent = "See full article";
+        cardContent.appendChild(link);
+
+        var date = document.createElement("time")
+
+
+        card.appendChild(cardContent);
+        container.appendChild(card);
+    }
+    
 }
 
 searchButton.addEventListener('click', searchOnClick);
