@@ -3,6 +3,7 @@ var newSearchObj = {
     categories: "",
     countries: "",
     languages:"",
+
 }
 
 var searchButton = document.querySelector("#searchBtn");
@@ -29,8 +30,7 @@ function getMediaApi(requestUrl) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
-            renderSearchDatatoPage();
+            renderSearchDatatoPage(data);
         });
 }
 
@@ -57,7 +57,8 @@ function getSearchResults(keyword) {
 
 }
 
-function renderSearchDatatoPage() {
+function renderSearchDatatoPage(data) {
+    console.log(data);
     console.log("renderSearchDatatoPage()");
 }
 
