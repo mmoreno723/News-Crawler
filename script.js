@@ -10,7 +10,6 @@ var searchButton = document.querySelector("#searchBtn");
 var container = document.querySelector("#cardContainer");
 
 
-
 var searchOnClick = function(event) {
     console.log("Search Button event listener");
     event.preventDefault();
@@ -19,6 +18,7 @@ var searchOnClick = function(event) {
     var categoriesOptions = document.querySelector("#categories").options;
     var categoriesSelected = [];
     var index = 0;
+    // allow support to select multiple options
     for (var i = 0; i < categoriesOptions.length; i++) {
         // add the selected options for categories
         // exclude the placeholder disabled option
@@ -35,9 +35,11 @@ var searchOnClick = function(event) {
             newSearchObj.categories += ",";
         }
     }
+    var countriesOptions = document.querySelector("#countries").value;
+    var countriesSelected = [];
+    var index = 0;
+    
 
-
-    newSearchObj.countries = document.querySelector("#countries").value;
     newSearchObj.languages = document.querySelector("#languages").value;
 
     console.log(newSearchObj);
@@ -64,7 +66,7 @@ function getSearchResults(keyword) {
         requestUrl = requestUrl + "&keywords=" + newSearchObj.keywords;
     }
     if (newSearchObj.categories != "") {
-        requestUrl = requestUrl + "&languages=" + newSearchObj.languages;
+        requestUrl = requestUrl + "&categories=" + newSearchObj.categories;
     }
     if (newSearchObj.countries != "") {
         requestUrl = requestUrl + "&countries=" + newSearchObj.countries;
