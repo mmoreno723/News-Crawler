@@ -5,6 +5,10 @@ var newSearchObj = {
     languages:"",
 
 }
+var multiSelect = new IconicMultiSelect({
+    select: "#languages",
+});
+multiSelect.init();
 
 var searchButton = document.querySelector("#searchBtn");
 

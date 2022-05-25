@@ -6,3 +6,8 @@
 nav {
     padding-top: 10px;
 }
+
+#title-text {
+    border-bottom: solid 4px white;
+    width: 400px;
+}
