@@ -14,7 +14,16 @@ var container = document.querySelector("#cardContainer");
 var numResultsSelector = document.querySelector("#num-results-selector");
 
 var searchOnClick = function(event) {
-    newSearchObj.hasSearched = true;
+    // reset the search object if user has done a previous search
+    if (newSearchObj.hasSearched) {
+        newSearchObj.keywords = "";
+        newSearchObj.categories= "";
+        newSearchObj.countries = "";
+        newSearchObj.languages = "";
+    } else {
+        newSearchObj.hasSearched = true;
+    }
+    
     event.preventDefault();
     newSearchObj.keywords = document.querySelector("#keyword").value;
 
@@ -90,14 +99,12 @@ function getMediaApi(requestUrl) {
 }
 
 function getSearchResults(limit) {
-    console.log("limit: " + limit);
-
     var requestUrl = 'http://api.mediastack.com/v1/news?access_key=c230246a63bce12a7b4bde1321f236d3';
     // check if a limit has been specified. If not, the default is 25 according to media stack
     if (limit !== undefined) {
         requestUrl = requestUrl + "&limit=" + limit;
     }
-    if (newSearchObj.keywords != null) {
+    if (newSearchObj.keywords != null || newSearchObj.keywords == "") {
         requestUrl = requestUrl + "&keywords=" + newSearchObj.keywords;
     }
     if (newSearchObj.categories != "") {
@@ -127,7 +134,7 @@ function renderSearchDatatoPage() {
         card.setAttribute("class", "card");
         column.appendChild(card);
         
-        if(articles[i].image != null)
+        if(articles[i].image !== undefined || articles[i].image != null)
         {
             var cardImg = document.createElement("div");
             cardImg.setAttribute("class", "card-image");
@@ -144,8 +151,8 @@ function renderSearchDatatoPage() {
         }
         
         var cardContent = document.createElement("div");
-        cardContent.setAttribute("class", "card-content");
-        
+        cardContent.setAttribute("class", "card-content");  
+
         var title = document.createElement("p");
         title.setAttribute("class", "title is-4");
         title.textContent = articles[i].title;
@@ -159,6 +166,9 @@ function renderSearchDatatoPage() {
         link.setAttribute("href", articles[i].url);
         link.setAttribute("target", "_blank");
         link.textContent = "See full article";
+        link.setAttribute("class", "button is-primary");
+        link.setAttribute("style", "margin-top: 10px");
+
         cardContent.appendChild(link);
 
         var date = document.createElement("time");
@@ -178,7 +188,6 @@ var changeNumResults = function(event) {
     } else {
         getSearchResults(newSearchObj.numResults)
     }
-    console.log("newSearchObj.numResults: " + newSearchObj.numResults);
 } 
 
 searchButton.addEventListener('click', searchOnClick);
