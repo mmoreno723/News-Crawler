@@ -95,6 +95,12 @@ function getMediaApi(requestUrl) {
             // EH notes: I changed the query data to a global variable
             mediaData = data;
             renderSearchDatatoPage();
+        })
+        .catch(error => {
+            var errorMessage = document.createElement("h1");
+            errorMessage.textContent = "Error: Failed to get search result.";
+            container.textContent="";
+            container.appendChild(errorMessage);
         });
 }
 
