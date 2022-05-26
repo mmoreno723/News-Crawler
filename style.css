@@ -1,8 +1,24 @@
-#cardContainer {
-    padding: 10px;
-    margin: 10px;
-}
+/* #cardContainer {
+  padding: 10px;
+  margin: 10px;
+} */
 
 nav {
-    padding-top: 10px;
+  padding-top: 10px;
+}
+
+#weather-box {
+  box-sizing: border-box;
+  border: solid black 1px;
+}
+
+#title-text {
+  border-bottom: solid 4px white;
+  width: 400px;
+}
+
+#num-results {
+  position: sticky;
+  top: 0px;
+  z-index: 1;
 }
