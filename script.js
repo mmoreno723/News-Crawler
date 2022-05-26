@@ -154,6 +154,7 @@ function renderSearchDatatoPage() {
 
         var link = document.createElement("a");
         link.setAttribute("href", articles[i].url);
+        link.setAttribute("target", "_blank");
         link.textContent = "See full article";
         cardContent.appendChild(link);
 
