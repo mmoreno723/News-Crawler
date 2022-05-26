@@ -8,8 +8,6 @@ nav {
 }
 
 #weather-box {
-  box-sizing: border-box;
-  border: solid black 1px;
   width: 400px;
 }
 
