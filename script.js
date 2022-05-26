@@ -216,5 +216,12 @@ var changeNumResults = function(event) {
     }
 } 
 
+function getWeatherApi() {
+
+}
+
+var lat = GeolocationCoordinates.latitude;
+console.log(lat);
+
 searchButton.addEventListener('click', searchOnClick);
 numResultsSelector.addEventListener('change', changeNumResults);
