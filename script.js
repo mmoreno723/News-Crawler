@@ -59,11 +59,6 @@ var searchOnClick = function(event) {
     var languagesSelected = [];
     index = 0;
 
-<<<<<<< HEAD
-    console.log(newSearchObj);
-
-   getSearchResults();
-=======
     for (i=0; i < languagesOptions.length; i++) {
         if(languagesOptions[i].selected && countriesOptions[i].value != "") {
             languagesSelected[index] = languagesOptions[i].value;
@@ -80,7 +75,6 @@ var searchOnClick = function(event) {
     // make the number of results selector appear after the search button has been clicked
     document.querySelector("#num-results").classList.remove("is-hidden");
     getSearchResults();
->>>>>>> main
 }
 
 function getMediaApi(requestUrl) {
