@@ -24,6 +24,11 @@ var searchOnClick = function(event) {
     } else {
         newSearchObj.hasSearched = true;
     }
+
+    // reset the card container classes if they previously got no results
+    if (container.className == "") {
+        container.setAttribute("class","columns is-multiline is-3");
+    }
     
     event.preventDefault();
     newSearchObj.keywords = document.querySelector("#keyword").value;
@@ -93,25 +98,37 @@ function getMediaApi(requestUrl) {
         .then(function (data) {
             // EH notes: I changed the query data to a global variable
             mediaData = data;
-            console.log(data);
             if (data.data.length > 0) {
                 renderSearchDatatoPage();
             } else {
-                var errorMessage = document.createElement("h2");
-                errorMessage.textContent = "No Results";
-                container.textContent="";
-                container.setAttribute("style", "margin: 20px");
-                container.appendChild(errorMessage);
+                renderNoResultHero("warning");
             }
         })
         .catch(error => {
             searchFailed = true;
-            var errorMessage = document.createElement("h2");
-            errorMessage.textContent = "Error: Failed to get search result.";
-            container.textContent="";
-            container.setAttribute("style", "margin: 20px");
-            container.appendChild(errorMessage);
+            renderNoResultHero("danger");
         });
+}
+
+function renderNoResultHero(type) {
+    var main = document.querySelector("container");
+    var errorMessage = document.createElement("p");
+    errorMessage.setAttribute("class", "title");
+    container.textContent="";
+    var warningHero = document.createElement("section");
+    if (type == "warning") {
+        warningHero.setAttribute("class", "hero is-medium is-warning");
+        errorMessage.textContent = "No Results";
+    } else if (type == "danger") {
+        warningHero.setAttribute("class", "hero is-medium is-danger");
+        errorMessage.textContent = "Error: Failed to get search result.";
+    }
+    var heroBody = document.createElement("div");
+    heroBody.setAttribute("class", "has-text-centered hero-body");
+    heroBody.appendChild(errorMessage);
+    warningHero.appendChild(heroBody);
+    container.className = "";
+    container.appendChild(warningHero);
 }
 
 function getSearchResults(limit) {
@@ -140,8 +157,6 @@ function getSearchResults(limit) {
 }
 
 function renderSearchDatatoPage() {
-    console.log("renderSearchDatatoPage()");
-
     container.textContent="";
     articles = mediaData.data;
     
