@@ -231,5 +231,49 @@ var changeNumResults = function(event) {
     }
 } 
 
+function getWeatherApi() {
+    if(navigator.geolocation)
+    {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            renderWeather(lat, lon);
+        });
+    }
+    else
+    {
+        var weatherError = document.querySelector("#city");
+        city.textContent = "Failed to get current location";
+    }
+}
+
+function renderWeather(lat, lon) {
+    var city = document.querySelector("#city");
+    var temp = document.querySelector("#temp");
+    var feel = document.querySelector("#feel");
+    var wind = document.querySelector("#wind");
+    var humid = document.querySelector("#humid");
+
+    const apiKey = '95827148da73fc51bf98de54195cc14e';
+    var url = "https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat="+ lat + "&lon=" + lon + "&appid=" + apiKey;
+
+    fetch(url).then(function (response) {
+        if (response.ok) {
+          response.json().then(function (data) {
+              console.log(data);
+              city.textContent = data.timezone;
+              feel.textContent = "Feels Like: " + data.current.feels_like;
+              temp.textContent = data.current.temp + " °F";
+              wind.textContent = "Wind Speed: " + data.current.wind_speed;
+              humid.textContent = "Humidity: " + data.current.humidity + " %";
+          });
+        } else {
+          return 'Error: ' + response.statusText;
+        }
+      });
+}
+
+getWeatherApi();
+
 searchButton.addEventListener('click', searchOnClick);
 numResultsSelector.addEventListener('change', changeNumResults);
