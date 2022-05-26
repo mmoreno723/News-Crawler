@@ -23,3 +23,7 @@ nav {
   top: 0px;
   z-index: 1;
 }
+
+.card-content p {
+  overflow-wrap: break-word;
+}
