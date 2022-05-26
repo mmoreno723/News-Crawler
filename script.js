@@ -8,6 +8,7 @@ var newSearchObj = {
 }
 
 var mediaData = "";
+var searchFailed = false;
 
 var searchButton = document.querySelector("#searchBtn");
 var container = document.querySelector("#cardContainer");
@@ -81,8 +82,6 @@ var searchOnClick = function(event) {
         }
     }
     
-    // make the number of results selector appear after the search button has been clicked
-    document.querySelector("#num-results").classList.remove("is-hidden");
     getSearchResults();
 }
 
@@ -97,6 +96,7 @@ function getMediaApi(requestUrl) {
             renderSearchDatatoPage();
         })
         .catch(error => {
+            searchFailed = true;
             var errorMessage = document.createElement("h1");
             errorMessage.textContent = "Error: Failed to get search result.";
             container.textContent="";
@@ -128,6 +128,8 @@ function getSearchResults(limit) {
 }
 
 function renderSearchDatatoPage() {
+    console.log("renderSearchDatatoPage()");
+
     container.textContent="";
     articles = mediaData.data;
     
@@ -183,10 +185,16 @@ function renderSearchDatatoPage() {
 
         card.appendChild(cardContent);
         container.appendChild(column);
+
+        // make the number of results selector appear after the search button has been clicked
+        document.querySelector("#num-results").classList.remove("is-hidden");
     }
 }
 
 var changeNumResults = function(event) {
+    if (searchFailed) {
+        return;
+    }
     newSearchObj.numResults = numResultsSelector.value;
     if (newSearchObj.numResults <= 25) {
         renderSearchDatatoPage()
