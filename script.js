@@ -121,8 +121,11 @@ function renderSearchDatatoPage() {
     // EH Notes: changed so that we only render the number of articles that the user wants. The default is 9.
     for(let i = 0; i < newSearchObj.numResults; i++)
     {
+        var column = document.createElement("div");
+        column.setAttribute("class", "column is-multiline is-one-third");
         var card = document.createElement("div");
-        card.setAttribute("class", "card column is-multiline is-one-third");
+        card.setAttribute("class", "card");
+        column.appendChild(card);
         
         if(articles[i].image != null)
         {
@@ -163,7 +166,7 @@ function renderSearchDatatoPage() {
         cardContent.appendChild(date);
 
         card.appendChild(cardContent);
-        container.appendChild(card);
+        container.appendChild(column);
     }
 }
 
