@@ -121,7 +121,8 @@ function getSearchResults(limit) {
         requestUrl = requestUrl + "&limit=" + limit;
     }
     if (newSearchObj.keywords != null || newSearchObj.keywords == "") {
-        requestUrl = requestUrl + "&keywords=" + newSearchObj.keywords;
+        // use encodeURIComponent in case the user types a space
+        requestUrl = requestUrl + "&keywords=" + encodeURIComponent(newSearchObj.keywords);
     }
     if (newSearchObj.categories != "") {
         requestUrl = requestUrl + "&categories=" + newSearchObj.categories;
@@ -132,7 +133,8 @@ function getSearchResults(limit) {
     if (newSearchObj.languages != "") {
         requestUrl = requestUrl + "&languages=" + newSearchObj.languages;
     }
-
+    // News Crawler sorts by popularity
+    requestUrl = requestUrl + "&sort=" + "popularity";
     console.log(requestUrl);
     getMediaApi(requestUrl);
 }
