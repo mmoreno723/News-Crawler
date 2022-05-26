@@ -93,13 +93,23 @@ function getMediaApi(requestUrl) {
         .then(function (data) {
             // EH notes: I changed the query data to a global variable
             mediaData = data;
-            renderSearchDatatoPage();
+            console.log(data);
+            if (data.data.length > 0) {
+                renderSearchDatatoPage();
+            } else {
+                var errorMessage = document.createElement("h2");
+                errorMessage.textContent = "No Results";
+                container.textContent="";
+                container.setAttribute("style", "margin: 20px");
+                container.appendChild(errorMessage);
+            }
         })
         .catch(error => {
             searchFailed = true;
-            var errorMessage = document.createElement("h1");
+            var errorMessage = document.createElement("h2");
             errorMessage.textContent = "Error: Failed to get search result.";
             container.textContent="";
+            container.setAttribute("style", "margin: 20px");
             container.appendChild(errorMessage);
         });
 }
