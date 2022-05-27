@@ -14,6 +14,8 @@ var searchButton = document.querySelector("#searchBtn");
 var container = document.querySelector("#cardContainer");
 var numResultsSelector = document.querySelector("#num-results-selector");
 
+getWeatherApi();
+
 var searchOnClick = function(event) {
     // reset the search object if user has done a previous search
     if (newSearchObj.hasSearched) {
@@ -261,11 +263,11 @@ function renderWeather(lat, lon) {
         if (response.ok) {
           response.json().then(function (data) {
               console.log(data);
-              city.textContent = data.timezone;
-              feel.textContent = "Feels Like: " + data.current.feels_like;
-              temp.textContent = data.current.temp + " °F";
-              wind.textContent = "Wind Speed: " + data.current.wind_speed;
-              humid.textContent = "Humidity: " + data.current.humidity + " %";
+              city.textContent += data.timezone;
+              feel.textContent += data.current.feels_like;
+              temp.textContent += data.current.temp + " °F";
+              wind.textContent +=data.current.wind_speed;
+              humid.textContent += data.current.humidity + " %";
           });
         } else {
           return 'Error: ' + response.statusText;
@@ -273,7 +275,7 @@ function renderWeather(lat, lon) {
       });
 }
 
-getWeatherApi();
+
 
 searchButton.addEventListener('click', searchOnClick);
 numResultsSelector.addEventListener('change', changeNumResults);
