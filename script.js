@@ -1,10 +1,20 @@
-var newSearchObj = {
-    keywords:"",
-    categories: "",
-    countries: "",
-    languages:"",
-    hasSearched: false,
-    numResults: 9
+// the user's previous search is automatically retrieved from localstorage
+var previousSearch = localStorage.getItem("previousSearch");
+if (previousSearch == null) {
+    var newSearchObj = {
+        keywords:"",
+        categories: "",
+        countries: "",
+        languages:"",
+        hasSearched: false,
+        numResults: 9
+    }
+// if the user has a previous search in localstorage, it is automatically rendered to the page
+} else {
+    var newSearchObj = JSON.parse(previousSearch);
+    newSearchObj.hasSearched = true;
+    newSearchObj.numResults = 9;
+    getSearchResults()
 }
 
 var limit = 25;
@@ -28,6 +38,8 @@ var searchOnClick = function(event) {
     } else {
         newSearchObj.hasSearched = true;
     }
+
+
 
     // reset the card container classes if they previously got no results
     if (container.className == "") {
@@ -104,6 +116,8 @@ function getMediaApi(requestUrl) {
             mediaData = data;
             if (data.data.length > 0) {
                 noResults = false;
+                // save search to localstorage
+                localStorage.setItem("previousSearch", JSON.stringify(newSearchObj));
                 renderSearchDatatoPage();
             } else {
                 noResults = true;
@@ -138,7 +152,7 @@ function renderNoResultHero(type) {
 }
 
 function getSearchResults() {
-    var requestUrl = 'http://api.mediastack.com/v1/news?access_key=c230246a63bce12a7b4bde1321f236d3';
+    var requestUrl = 'http://api.mediastack.com/v1/news?access_key=5217234f00ee82a8f21234381297455e';
     // check if a limit has been specified. If not, the default is 25 according to media stack
     if (limit > 25) {
         requestUrl = requestUrl + "&limit=" + limit;
