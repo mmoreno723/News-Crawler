@@ -1,30 +1,28 @@
 // the user's previous search is automatically retrieved from localstorage
 var previousSearch = localStorage.getItem("previousSearch");
-if (previousSearch == null) {
-    var newSearchObj = {
-        keywords:"",
-        categories: "",
-        countries: "",
-        languages:"",
-        hasSearched: false,
-        numResults: 9
-    }
-// if the user has a previous search in localstorage, it is automatically rendered to the page
-} else {
-    var newSearchObj = JSON.parse(previousSearch);
-    newSearchObj.hasSearched = true;
-    newSearchObj.numResults = 9;
-    getSearchResults()
+var newSearchObj = {
+    keywords:"",
+    categories: "",
+    countries: "",
+    languages:"",
+    hasSearched: false,
+    numResults: 9
 }
-
 var limit = 25;
 
-var mediaData = "";
+
 var noResults = false;
 
 var searchButton = document.querySelector("#searchBtn");
 var container = document.querySelector("#cardContainer");
 var numResultsSelector = document.querySelector("#num-results-selector");
+// if the user has a previous search in localstorage, it is automatically rendered to the page
+if (previousSearch != null) {
+    var mediaData = JSON.parse(previousSearch);
+    renderSearchDatatoPage()
+} else {
+    var mediaData = "";
+}
 
 getWeatherApi();
 
@@ -117,7 +115,7 @@ function getMediaApi(requestUrl) {
             if (data.data.length > 0) {
                 noResults = false;
                 // save search to localstorage
-                localStorage.setItem("previousSearch", JSON.stringify(newSearchObj));
+                localStorage.setItem("previousSearch", JSON.stringify(mediaData));
                 renderSearchDatatoPage();
             } else {
                 noResults = true;
