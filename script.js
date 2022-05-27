@@ -266,7 +266,7 @@ function renderWeather(lat, lon) {
               city.textContent += data.timezone;
               feel.textContent += data.current.feels_like;
               temp.textContent += data.current.temp + " °F";
-              wind.textContent +=data.current.wind_speed;
+              wind.textContent +=data.current.wind_speed + " mph";
               humid.textContent += data.current.humidity + " %";
           });
         } else {
