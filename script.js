@@ -245,7 +245,7 @@ function getWeatherApi() {
     else
     {
         var weatherError = document.querySelector("#city");
-        city.textContent = "Failed to get current location";
+        weatherError.textContent = "Failed to get current location";
     }
 }
 
