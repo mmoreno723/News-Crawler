@@ -263,7 +263,6 @@ function renderWeather(lat, lon) {
         if (response.ok) {
           response.json().then(function (data) {
               console.log(data);
-              city.textContent += data.timezone;
               feel.textContent += data.current.feels_like;
               temp.textContent += data.current.temp + " °F";
               wind.textContent +=data.current.wind_speed + " mph";
