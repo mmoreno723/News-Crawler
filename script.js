@@ -140,7 +140,6 @@ function renderNoResultHero(type) {
 function getSearchResults() {
     var requestUrl = 'http://api.mediastack.com/v1/news?access_key=c230246a63bce12a7b4bde1321f236d3';
     // check if a limit has been specified. If not, the default is 25 according to media stack
-    console.log("limit: " + limit);
     if (limit > 25) {
         requestUrl = requestUrl + "&limit=" + limit;
     }
@@ -253,13 +252,12 @@ function getWeatherApi() {
     }
     else
     {
-        var weatherError = document.querySelector("#city");
+        var weatherError = document.querySelector("#local-weather");
         weatherError.textContent = "Failed to get current location";
     }
 }
 
 function renderWeather(lat, lon) {
-    var city = document.querySelector("#city");
     var temp = document.querySelector("#temp");
     var feel = document.querySelector("#feel");
     var wind = document.querySelector("#wind");
@@ -271,7 +269,6 @@ function renderWeather(lat, lon) {
     fetch(url).then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
-              console.log(data);
               feel.textContent += data.current.feels_like;
               temp.textContent += data.current.temp + " °F";
               wind.textContent +=data.current.wind_speed + " mph";
