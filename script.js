@@ -7,8 +7,10 @@ var newSearchObj = {
     numResults: 9
 }
 
+var limit = 25;
+
 var mediaData = "";
-var searchFailed = false;
+var noResults = false;
 
 var searchButton = document.querySelector("#searchBtn");
 var container = document.querySelector("#cardContainer");
@@ -101,13 +103,15 @@ function getMediaApi(requestUrl) {
             // EH notes: I changed the query data to a global variable
             mediaData = data;
             if (data.data.length > 0) {
+                noResults = false;
                 renderSearchDatatoPage();
             } else {
+                noResults = true;
                 renderNoResultHero("warning");
             }
         })
         .catch(error => {
-            searchFailed = true;
+            noResults = true;
             renderNoResultHero("danger");
         });
 }
@@ -133,10 +137,11 @@ function renderNoResultHero(type) {
     container.appendChild(warningHero);
 }
 
-function getSearchResults(limit) {
+function getSearchResults() {
     var requestUrl = 'http://api.mediastack.com/v1/news?access_key=c230246a63bce12a7b4bde1321f236d3';
     // check if a limit has been specified. If not, the default is 25 according to media stack
-    if (limit !== undefined) {
+    console.log("limit: " + limit);
+    if (limit > 25) {
         requestUrl = requestUrl + "&limit=" + limit;
     }
     if (newSearchObj.keywords != null || newSearchObj.keywords == "") {
@@ -221,15 +226,19 @@ function renderSearchDatatoPage() {
 }
 
 var changeNumResults = function(event) {
-    if (searchFailed) {
+    newSearchObj.numResults = numResultsSelector.value;
+    // if the user wants more results than the default limit of 25
+    if (newSearchObj.numResults > 25) {
+        limit = newSearchObj.numResults;
+    }
+    if (noResults) {
         return;
     }
-    newSearchObj.numResults = numResultsSelector.value;
     if (newSearchObj.numResults <= 25) {
-        renderSearchDatatoPage()
-    // if the user wants more results than the default limit of 25, run the query again with a higher limit
+        renderSearchDatatoPage();
+    
     } else {
-        getSearchResults(newSearchObj.numResults)
+        getSearchResults();
     }
 } 
 
