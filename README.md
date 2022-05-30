@@ -1,18 +1,18 @@
 # News Crawler
 
+## Directions
+BEFORE CLICKING THE PROJECT LINK THE FOLLOWING MUST BE DONE!!
+Go to https://cors-anywhere.herokuapp.com/corsdemo and request temporary access to the demo server, or else the media stack queries will receive an error. This is because Our free media stack license only allows http calls to be made, and github pages enforces only https calls.
+
+## Link
+https://mmoreno723.github.io/group-project-1/
+
 ## Description
 Welcome to News Crawler. News Crawler is an application that allows users to view news sources from aroud the world in an easy manner  In developing our application we decided to render current news articles using server-side APIs. We were inspired to create News Crawler to give users access to various forms of news articles that could be displayed in different languages from around the world. We also drew inspiration from the fact that some users might want to view their news from other sources that don't include social media. News Crawler was developed using HTML, Javascript, and Bulma. We decided to use Bulma, a CSS library, to create a layout that allowed for an easy UI experience. Certain elements within our HTML were linked to the Bulma documentation that created buttons, columns, selectors, and headers.
 
 The news API that we used was a free-to-use data source, which means that some of the news articles were not the best quality, nor did all of them have images. We thought about using a different API that would give us access to more high quality articles but the price to use it was farily steep. Perhaps, if we were to get funding, we could decide to implement the better news API. In the future, we also hope to implement a feature that translates the content of the news article title and description into another language that the user specifies. This was one of our original user stores, but we decided against it because the API returned weird and out of place characters that would make it difficult to translate. 
 
-## Link
-https://mmoreno723.github.io/group-project-1/
-
 ## Usage
-
-BEFORE CLICKING THE ABOVE LINK THE FOLLOWING MUST BE DONE!!
-Go to https://cors-anywhere.herokuapp.com/corsdemo and request temporary access to the demo server, or else the media stack queries will receive an error. This is because Our free media stack license only allows http calls to be made, and github pages enforces only https calls.
-
 When the user opens the page, they will be asked if their location can be used. If they accept, their local weather data will be displayed. 
 
 The user can than search for news articles using the following parameters: keywords, categories, countries, and languages. They can input anything they want for the keyword, or choose not to input one. They can then select the category of news articles they want to see, the country that the articles will originate from, and language that the news article is in. They can select multiple options for the 3 aforementioned parameters using a command click (on mac), or choose to not to select any options. When they click the search button, articles will render based on their search criteria.
