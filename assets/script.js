@@ -153,7 +153,10 @@ function renderNoResultHero(type) {
 }
 
 function getSearchResults() {
-    var requestUrl = 'http://api.mediastack.com/v1/news?access_key=5217234f00ee82a8f21234381297455e';
+    /* EH Notes: need to prepend the cors-anywhere to get the media stack request url to work on Github pages. 
+    Our free media stack license only allows http calls to be made, and github pages enforces only https calls*/
+    var requestUrl = 'https://cors-anywhere.herokuapp.com/'
+    requestUrl += 'http://api.mediastack.com/v1/news?access_key=5217234f00ee82a8f21234381297455e';
     // EH notes: check if a limit has been specified. If not, the default is 25 according to media stack
     if (limit > 25) {
         requestUrl = requestUrl + "&limit=" + limit;

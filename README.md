@@ -9,6 +9,10 @@ The news API that we used was a free-to-use data source, which means that some o
 https://mmoreno723.github.io/group-project-1/
 
 ## Usage
+
+BEFORE CLICKING THE ABOVE LINK THE FOLLOWING MUST BE DONE!!
+Go to https://cors-anywhere.herokuapp.com/corsdemo and request temporary access to the demo server, or else the media stack queries will receive an error. This is because Our free media stack license only allows http calls to be made, and github pages enforces only https calls.
+
 When the user opens the page, they will be asked if their location can be used. If they accept, their local weather data will be displayed. 
 
 The user can than search for news articles using the following parameters: keywords, categories, countries, and languages. They can input anything they want for the keyword, or choose not to input one. They can then select the category of news articles they want to see, the country that the articles will originate from, and language that the news article is in. They can select multiple options for the 3 aforementioned parameters using a command click (on mac), or choose to not to select any options. When they click the search button, articles will render based on their search criteria.
@@ -22,7 +26,7 @@ Our page saves the user most recent search results to localStorage when a search
 ## Credits
 Created by Michael Moreno, Eric Hochwald, and Taeyong Lee.
 
-## Screenshot!
+## Screenshots
 ![Search Error](assets/imgs/search-error.png)
 ![No Results](assets/imgs/no-results.png)
 ![Successful Search](assets/imgs/successful-search.png)
