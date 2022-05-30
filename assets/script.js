@@ -1,72 +1,71 @@
-// the user's previous search is automatically retrieved from localstorage
+// EH notes: the user's previous search is automatically retrieved from localstorage
 var previousSearch = localStorage.getItem("previousSearch");
-if (previousSearch == null) {
-    var newSearchObj = {
-        keywords:"",
-        categories: "",
-        countries: "",
-        languages:"",
-        hasSearched: false,
-        numResults: 9
-    }
-// if the user has a previous search in localstorage, it is automatically rendered to the page
-} else {
-    var newSearchObj = JSON.parse(previousSearch);
-    newSearchObj.hasSearched = true;
-    newSearchObj.numResults = 9;
-    getSearchResults()
+var SearchObj = {
+    keywords:"",
+    categories: "",
+    countries: "",
+    languages:"",
+    hasSearched: false,
+    // EH Notes: we set the default number of results to 9
+    numResults: 9
 }
-
 var limit = 25;
 
-var mediaData = "";
+
 var noResults = false;
 
 var searchButton = document.querySelector("#searchBtn");
 var container = document.querySelector("#cardContainer");
 var numResultsSelector = document.querySelector("#num-results-selector");
+// EH notes: if the user has a previous search in localstorage, it is automatically rendered to the page
+if (previousSearch != null) {
+    var mediaData = JSON.parse(previousSearch);
+    renderSearchDatatoPage()
+} else {
+    var mediaData = "";
+}
 
 getWeatherApi();
 
 var searchOnClick = function(event) {
-    // reset the search object if user has done a previous search
-    if (newSearchObj.hasSearched) {
-        newSearchObj.keywords = "";
-        newSearchObj.categories= "";
-        newSearchObj.countries = "";
-        newSearchObj.languages = "";
+    // EH notes: reset the search object if user has done a previous search
+    if (SearchObj.hasSearched) {
+        SearchObj.keywords = "";
+        SearchObj.categories= "";
+        SearchObj.countries = "";
+        SearchObj.languages = "";
     } else {
-        newSearchObj.hasSearched = true;
+        SearchObj.hasSearched = true;
     }
 
 
 
-    // reset the card container classes if they previously got no results
+    // EH notes: reset the card container classes if they previously got no results
     if (container.className == "") {
         container.setAttribute("class","columns is-multiline is-3");
     }
     
     event.preventDefault();
-    newSearchObj.keywords = document.querySelector("#keyword").value;
+    SearchObj.keywords = document.querySelector("#keyword").value;
 
     var categoriesOptions = document.querySelector("#categories").options;
     var categoriesSelected = [];
     var index = 0;
-    // allow support to select multiple options
+    // EH notes: allow support to select multiple options
     for (var i = 0; i < categoriesOptions.length; i++) {
-        // add the selected options for categories
-        // exclude the placeholder disabled option
+        // EH notes: add the selected options for categories
+        // EH notes: exclude the placeholder disabled option
         if(categoriesOptions[i].selected && categoriesOptions[i].value != "") {
             categoriesSelected[index] = categoriesOptions[i].value;
             index++;
         } 
     }
     for (var j = 0; j < categoriesSelected.length; j++) {
-        newSearchObj.categories += categoriesSelected[j];
-        // add a comma between the options
-        // make sure to avoid putting an option at the end
+        SearchObj.categories += categoriesSelected[j];
+        /* EH notes: add a comma between the options
+           make sure to avoid putting an option at the end */
         if (j < categoriesSelected.length-1) {
-            newSearchObj.categories += ",";
+            SearchObj.categories += ",";
         }
     }
     var countriesOptions = document.querySelector("#countries").options;
@@ -80,9 +79,9 @@ var searchOnClick = function(event) {
         }
     }
     for (j=0; j < countriesSelected.length; j++) {
-        newSearchObj.countries += countriesSelected[j];
+        SearchObj.countries += countriesSelected[j];
         if (j < countriesSelected.length-1) {
-            newSearchObj.countries += ",";
+            SearchObj.countries += ",";
         }
     }
     
@@ -97,9 +96,9 @@ var searchOnClick = function(event) {
         }
     }
     for (j=0; j < languagesSelected.length; j++) {
-        newSearchObj.languages += languagesSelected[j];
+        SearchObj.languages += languagesSelected[j];
         if (j < languagesSelected.length-1) {
-            newSearchObj.languages += ",";
+            SearchObj.languages += ",";
         }
     }
     
@@ -116,8 +115,8 @@ function getMediaApi(requestUrl) {
             mediaData = data;
             if (data.data.length > 0) {
                 noResults = false;
-                // save search to localstorage
-                localStorage.setItem("previousSearch", JSON.stringify(newSearchObj));
+                // EH notes: save search to localstorage
+                localStorage.setItem("previousSearch", JSON.stringify(mediaData));
                 renderSearchDatatoPage();
             } else {
                 noResults = true;
@@ -129,7 +128,9 @@ function getMediaApi(requestUrl) {
             renderNoResultHero("danger");
         });
 }
-
+/* EH Notes: displays a yellow "no result" hero to the page if the query 
+returns an empty array. Displays a red "Error: Failed to get search result"
+hero to the page if the query gets an error*/
 function renderNoResultHero(type) {
     var main = document.querySelector("container");
     var errorMessage = document.createElement("p");
@@ -152,25 +153,28 @@ function renderNoResultHero(type) {
 }
 
 function getSearchResults() {
-    var requestUrl = 'http://api.mediastack.com/v1/news?access_key=5217234f00ee82a8f21234381297455e';
-    // check if a limit has been specified. If not, the default is 25 according to media stack
+    /* EH Notes: need to prepend the cors-anywhere to get the media stack request url to work on Github pages. 
+    Our free media stack license only allows http calls to be made, and github pages enforces only https calls*/
+    var requestUrl = 'https://cors-anywhere.herokuapp.com/'
+    requestUrl += 'http://api.mediastack.com/v1/news?access_key=5217234f00ee82a8f21234381297455e';
+    // EH notes: check if a limit has been specified. If not, the default is 25 according to media stack
     if (limit > 25) {
         requestUrl = requestUrl + "&limit=" + limit;
     }
-    if (newSearchObj.keywords != null || newSearchObj.keywords == "") {
-        // use encodeURIComponent in case the user types a space
-        requestUrl = requestUrl + "&keywords=" + encodeURIComponent(newSearchObj.keywords);
+    if (SearchObj.keywords != null || SearchObj.keywords == "") {
+        // EH notes: use encodeURIComponent in case the user types a space
+        requestUrl = requestUrl + "&keywords=" + encodeURIComponent(SearchObj.keywords);
     }
-    if (newSearchObj.categories != "") {
-        requestUrl = requestUrl + "&categories=" + newSearchObj.categories;
+    if (SearchObj.categories != "") {
+        requestUrl = requestUrl + "&categories=" + SearchObj.categories;
     }
-    if (newSearchObj.countries != "") {
-        requestUrl = requestUrl + "&countries=" + newSearchObj.countries;
+    if (SearchObj.countries != "") {
+        requestUrl = requestUrl + "&countries=" + SearchObj.countries;
     }
-    if (newSearchObj.languages != "") {
-        requestUrl = requestUrl + "&languages=" + newSearchObj.languages;
+    if (SearchObj.languages != "") {
+        requestUrl = requestUrl + "&languages=" + SearchObj.languages;
     }
-    // News Crawler sorts by popularity
+    // EH notes: News Crawler sorts by popularity
     requestUrl = requestUrl + "&sort=" + "popularity";
     console.log(requestUrl);
     getMediaApi(requestUrl);
@@ -181,7 +185,7 @@ function renderSearchDatatoPage() {
     articles = mediaData.data;
     
     // EH Notes: changed so that we only render the number of articles that the user wants. The default is 9.
-    for(let i = 0; i < newSearchObj.numResults; i++)
+    for(let i = 0; i < SearchObj.numResults; i++)
     {
         var column = document.createElement("div");
         column.setAttribute("class", "column is-multiline is-one-third");
@@ -233,21 +237,21 @@ function renderSearchDatatoPage() {
         card.appendChild(cardContent);
         container.appendChild(column);
 
-        // make the number of results selector appear after the search button has been clicked
+        // EH notes: make the number of results selector appear after the search button has been clicked
         document.querySelector("#num-results").classList.remove("is-hidden");
     }
 }
 
 var changeNumResults = function(event) {
-    newSearchObj.numResults = numResultsSelector.value;
-    // if the user wants more results than the default limit of 25
-    if (newSearchObj.numResults > 25) {
-        limit = newSearchObj.numResults;
+    SearchObj.numResults = numResultsSelector.value;
+    // EH notes: if the user wants more results than the default limit of 25
+    if (SearchObj.numResults > 25) {
+        limit = SearchObj.numResults;
     }
     if (noResults) {
         return;
     }
-    if (newSearchObj.numResults <= 25) {
+    if (SearchObj.numResults <= 25) {
         renderSearchDatatoPage();
     
     } else {
