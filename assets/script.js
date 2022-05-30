@@ -1,6 +1,6 @@
 // EH notes: the user's previous search is automatically retrieved from localstorage
 var previousSearch = localStorage.getItem("previousSearch");
-var newSearchObj = {
+var SearchObj = {
     keywords:"",
     categories: "",
     countries: "",
@@ -29,13 +29,13 @@ getWeatherApi();
 
 var searchOnClick = function(event) {
     // EH notes: reset the search object if user has done a previous search
-    if (newSearchObj.hasSearched) {
-        newSearchObj.keywords = "";
-        newSearchObj.categories= "";
-        newSearchObj.countries = "";
-        newSearchObj.languages = "";
+    if (SearchObj.hasSearched) {
+        SearchObj.keywords = "";
+        SearchObj.categories= "";
+        SearchObj.countries = "";
+        SearchObj.languages = "";
     } else {
-        newSearchObj.hasSearched = true;
+        SearchObj.hasSearched = true;
     }
 
 
@@ -46,7 +46,7 @@ var searchOnClick = function(event) {
     }
     
     event.preventDefault();
-    newSearchObj.keywords = document.querySelector("#keyword").value;
+    SearchObj.keywords = document.querySelector("#keyword").value;
 
     var categoriesOptions = document.querySelector("#categories").options;
     var categoriesSelected = [];
@@ -61,11 +61,11 @@ var searchOnClick = function(event) {
         } 
     }
     for (var j = 0; j < categoriesSelected.length; j++) {
-        newSearchObj.categories += categoriesSelected[j];
+        SearchObj.categories += categoriesSelected[j];
         /* EH notes: add a comma between the options
            make sure to avoid putting an option at the end */
         if (j < categoriesSelected.length-1) {
-            newSearchObj.categories += ",";
+            SearchObj.categories += ",";
         }
     }
     var countriesOptions = document.querySelector("#countries").options;
@@ -79,9 +79,9 @@ var searchOnClick = function(event) {
         }
     }
     for (j=0; j < countriesSelected.length; j++) {
-        newSearchObj.countries += countriesSelected[j];
+        SearchObj.countries += countriesSelected[j];
         if (j < countriesSelected.length-1) {
-            newSearchObj.countries += ",";
+            SearchObj.countries += ",";
         }
     }
     
@@ -96,9 +96,9 @@ var searchOnClick = function(event) {
         }
     }
     for (j=0; j < languagesSelected.length; j++) {
-        newSearchObj.languages += languagesSelected[j];
+        SearchObj.languages += languagesSelected[j];
         if (j < languagesSelected.length-1) {
-            newSearchObj.languages += ",";
+            SearchObj.languages += ",";
         }
     }
     
@@ -161,18 +161,18 @@ function getSearchResults() {
     if (limit > 25) {
         requestUrl = requestUrl + "&limit=" + limit;
     }
-    if (newSearchObj.keywords != null || newSearchObj.keywords == "") {
+    if (SearchObj.keywords != null || SearchObj.keywords == "") {
         // EH notes: use encodeURIComponent in case the user types a space
-        requestUrl = requestUrl + "&keywords=" + encodeURIComponent(newSearchObj.keywords);
+        requestUrl = requestUrl + "&keywords=" + encodeURIComponent(SearchObj.keywords);
     }
-    if (newSearchObj.categories != "") {
-        requestUrl = requestUrl + "&categories=" + newSearchObj.categories;
+    if (SearchObj.categories != "") {
+        requestUrl = requestUrl + "&categories=" + SearchObj.categories;
     }
-    if (newSearchObj.countries != "") {
-        requestUrl = requestUrl + "&countries=" + newSearchObj.countries;
+    if (SearchObj.countries != "") {
+        requestUrl = requestUrl + "&countries=" + SearchObj.countries;
     }
-    if (newSearchObj.languages != "") {
-        requestUrl = requestUrl + "&languages=" + newSearchObj.languages;
+    if (SearchObj.languages != "") {
+        requestUrl = requestUrl + "&languages=" + SearchObj.languages;
     }
     // EH notes: News Crawler sorts by popularity
     requestUrl = requestUrl + "&sort=" + "popularity";
@@ -185,7 +185,7 @@ function renderSearchDatatoPage() {
     articles = mediaData.data;
     
     // EH Notes: changed so that we only render the number of articles that the user wants. The default is 9.
-    for(let i = 0; i < newSearchObj.numResults; i++)
+    for(let i = 0; i < SearchObj.numResults; i++)
     {
         var column = document.createElement("div");
         column.setAttribute("class", "column is-multiline is-one-third");
@@ -243,15 +243,15 @@ function renderSearchDatatoPage() {
 }
 
 var changeNumResults = function(event) {
-    newSearchObj.numResults = numResultsSelector.value;
+    SearchObj.numResults = numResultsSelector.value;
     // EH notes: if the user wants more results than the default limit of 25
-    if (newSearchObj.numResults > 25) {
-        limit = newSearchObj.numResults;
+    if (SearchObj.numResults > 25) {
+        limit = SearchObj.numResults;
     }
     if (noResults) {
         return;
     }
-    if (newSearchObj.numResults <= 25) {
+    if (SearchObj.numResults <= 25) {
         renderSearchDatatoPage();
     
     } else {
