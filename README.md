@@ -21,6 +21,8 @@ When they click search, article cards will render in rows of 3 showing the artic
 
 The user can also control the number of article cards that want to see on the page based on their search. The default number is 9. They can select other options from the Number of Results selector, which sticks to the top of the page when they scroll down to view the articles. If they select a number higher than 25, another media stack fetch query will be made, since media stack returns a default number of 25 articles.
 
+One thing to note is for the time being that our news articles are being sorted by popularity when displayed. This is hard coded. 
+
 Our page saves the user most recent search results to localStorage when a search is made. That way if the user closes the News Crawler page, their most recent search results are automatically rendered when they open the page again. We save the actual response object from media stack to local storage. That way, we won't have to perform another query when the user opens the page again. It would be ideal to save the user's search criteria to local storage instead of the query response object so that we can perform an updated search of articles based on the user's previous search criteria to get updated news when they open the page. However, we are trying to limit the amount of queries we do to media stack since we have a free license which has a limit on the number of queries we can do. 
  
 ## Credits
